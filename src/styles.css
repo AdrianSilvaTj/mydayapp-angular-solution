@@ -52,6 +52,11 @@ body {
   padding-bottom: 4rem;
 }
 
+.errors{
+  color: darkorange;
+  font-size: small;
+}
+
 .hidden {
   display: none;
 }
@@ -397,3 +402,6 @@ html .clear-completed:active {
 :focus {
   outline: 0;
 }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
