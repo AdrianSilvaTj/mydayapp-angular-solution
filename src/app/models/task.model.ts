@@ -1,6 +1,10 @@
+interface EditState{
+
+}
+
 export interface TypeTask {
   id: string,
   title: string,
   completed: boolean,
-  isEditting: boolean,
+  isEditting: 'true'| 'false' | 'disabled'
 }

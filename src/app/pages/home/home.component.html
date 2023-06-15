@@ -25,26 +25,39 @@
         <li
           *ngFor="let tks of tasks"
           id="{{ tks.id }}"
-          [ngClass]="{ completed: tks.completed, editing: tks.isEditting }"
+          [ngClass]="{
+            'completed': tks.completed,
+            'editing': tks.isEditting === 'true'
+          }"
         >
           <div class="view">
             <input
+              *ngIf="tks.completed"
+              checked
               class="toggle"
               type="checkbox"
+              [disabled] = "tks.isEditting === 'disabled'"
               (click)="changeState(tks.id)"
             />
-            <label (dblclick)="changeToEdit(tks.id, $event)">{{
+            <input
+              *ngIf="!tks.completed"
+              class="toggle"
+              type="checkbox"
+              [disabled] = "tks.isEditting === 'disabled'"
+              (click)="changeState(tks.id)"
+            />
+            <label (dblclick)="changeToEdit(tks.id)">{{
               tks.title
             }}</label>
             <button (click)="onDestroy(tks.id)" class="destroy"></button>
           </div>
           <input
-            (keydown.escape)="changeToEdit(tks.id, $event)"
+            *ngIf="tks.isEditting ==='true' "
+            (keydown.escape)="onExitEdit()"
             (keydown.enter)="onEditTask(tks.id)"
-            #editInput
             [formControl]="editTask"
             class="edit"
-            value="{{ tks.title }}"
+            id="editInput"
           />
         </li>
       </ul>
@@ -52,7 +65,7 @@
     <!-- This footer should be hidden by default and shown when there are todos -->
     <footer *ngIf="tasks.length > 0" class="footer">
       <!-- This should be `0 items left` by default -->
-      <span class="todo-count"><strong>0</strong> item left</span>
+      <span class="todo-count"><strong>{{countPend}}</strong> {{ countPend | i18nPlural: itemPluralMapping }} left</span>
       <!-- Remove this if you don't implement routing -->
       <ul class="filters">
         <li>
@@ -66,7 +79,7 @@
         </li>
       </ul>
       <!-- Hidden if no completed items are left ↓ -->
-      <button class="clear-completed">Clear completed</button>
+      <button *ngIf="countCompleted > 0" class="clear-completed" (click)="clearCompleted()">Clear completed</button>
     </footer>
   </div>
 </section>
