@@ -14,7 +14,7 @@ export class StorageService {
 
   getTasks() {
     let tasks = localStorage.getItem('mydayapp-angular');
-    console.log(tasks);
+    //console.log(tasks);
     if (tasks) {
       return JSON.parse(tasks);
     }

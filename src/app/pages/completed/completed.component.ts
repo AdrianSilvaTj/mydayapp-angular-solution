@@ -1,4 +1,4 @@
-import { Component, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { TypeTask } from 'src/app/models/task.model';
 import { StorageService } from 'src/app/services/storage.service';
 
@@ -9,16 +9,24 @@ import { StorageService } from 'src/app/services/storage.service';
 })
 export class CompletedComponent implements OnInit {
 
-  @Output() completedTask!: TypeTask[];
+
+  completedTask: TypeTask[] = [];
 
   constructor(private storageService: StorageService) {
-    if(this.storageService.getTasks()){
-
-    }
   }
 
   ngOnInit(): void {
-
+    const tasks: TypeTask[] = this.storageService.getTasks();
+    const comTask: TypeTask[] = [];
+    if(tasks){
+      tasks.map((tk) =>{
+        if(tk.completed){
+          comTask.push(tk);
+        }
+      })
+      this.completedTask = comTask;
+      console.log(this.completedTask);
+    }
   }
 
 }

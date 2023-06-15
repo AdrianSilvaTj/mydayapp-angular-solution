@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewChild, Input } from '@angular/core';
+import { Component, ElementRef, ViewChild, Input, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { TypeTask } from 'src/app/models/task.model';
 import { StorageService } from 'src/app/services/storage.service';
@@ -16,9 +16,14 @@ export class HomeComponent implements OnInit {
       'other' : 'Items'
   }
 
-  @Input() tasks!: TypeTask[];
-  newTask = new FormControl('', [Validators.required]);
+  tasks: TypeTask[] = [];
+  @Input()
+  set tasksArr (data:TypeTask[]){
+    this.tasks = data;
+    this.countPendindTask();
+  }
 
+  newTask = new FormControl('', [Validators.required]);
   editTask = new FormControl('', [Validators.required]);
   isAdding = false;
   countPend = 0;
@@ -27,7 +32,10 @@ export class HomeComponent implements OnInit {
   constructor(private storageService: StorageService) {}
 
   ngOnInit(): void {
-    this.showTask();
+    if (this.tasks.length === 0) {
+      console.log('No tasksArr');
+      this.showTask();
+    }
   }
 
   addTask() {
