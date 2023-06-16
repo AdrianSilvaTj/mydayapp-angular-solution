@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { HomeComponent } from './pages/home/home.component';
 import { CompletedComponent } from './pages/completed/completed.component';
+import { PendingComponent } from './pages/pending/pending.component';
 
 const routes: Routes = [
   {
@@ -13,6 +14,11 @@ const routes: Routes = [
   {
     path: 'completed',
     component: CompletedComponent,
+    pathMatch: 'full'
+  },
+  {
+    path: 'pending',
+    component: PendingComponent,
     pathMatch: 'full'
   }
 ];

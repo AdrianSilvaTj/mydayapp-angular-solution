@@ -9,7 +9,6 @@ import { StorageService } from 'src/app/services/storage.service';
 })
 export class CompletedComponent implements OnInit {
 
-
   completedTask: TypeTask[] = [];
 
   constructor(private storageService: StorageService) {
